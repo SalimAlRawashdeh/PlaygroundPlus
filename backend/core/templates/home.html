@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Home Page{% endblock %}</title>
+</head>
+<body>
+    <h1>Ask a question</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="user_input" placeholder="Enter your prompt here..." required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if user_input %}
+        <h2>You asked:</h2>
+        <p>{{ user_input }}</p>
+    {% endif %}
+
+    {% if responses %}
+        <h2>Responses from Models:</h2>
+        <ul>
+            {% for model_id, response in responses.items %}
+                <li>
+                    <strong>{{ model_id }}:</strong><br>
+                    <pre>{{ response }}</pre>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
