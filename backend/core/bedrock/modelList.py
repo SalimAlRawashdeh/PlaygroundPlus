@@ -1,4 +1,4 @@
-# models.py
+# modelList.py
 
 def get_model_payloads(prompt_data):
     return {
@@ -25,6 +25,15 @@ def get_model_payloads(prompt_data):
             "max_tokens_to_sample": 512,
             "temperature": 0.5,
             "anthropic_version": "bedrock-2023-05-31"
+        },
+
+        "arn:aws:bedrock:us-west-2:952029066932:inference-profile/us.anthropic.claude-3-haiku-20240307-v1:0": {
+          "messages": [
+            {"role": "user", "content": prompt_data}
+          ],
+          "max_tokens": 512,
+          "temperature": 0.5,
+          "anthropic_version": "bedrock-2023-05-31"
         },
 
         # DeepSeek R1 (✅ FIXED: changed 'input' ➝ 'prompt')

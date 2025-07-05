@@ -1,19 +1,19 @@
 import json
 import boto3
-from .models import get_model_payloads
+from .modelList import get_model_payloads
 from .modelHashMap import modelIDs
 
 
 bedrock = boto3.client("bedrock-runtime", region_name="us-west-2")
 
-def ask_query(prompt):
+def ask_query(prompt, model_ids):
     results = {}
 
     prompt_data = prompt
     model_payloads = get_model_payloads(prompt_data)
 
-    for key, value in modelIDs.items():
-        model_id = value
+    for model in model_ids:
+        model_id = modelIDs[model]
         payload = model_payloads[model_id]
         body = json.dumps(payload)
 
@@ -44,7 +44,6 @@ def ask_query(prompt):
                 # Or might just have 'generation' or 'completion' keys directly
                 response_text = response_body.get("generation") or response_body.get("completion")
 
-        print(response_text)
-        results[key] = response_text
+        results[model] = response_text
 
     return results
