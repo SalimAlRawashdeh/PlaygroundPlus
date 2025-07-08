@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import PromptBar from "./components/PromptBar";
+import Spinner from "./components/Spinner";
 
 function App() {
     const [userInput, setUserInput] = useState('');
@@ -23,7 +24,6 @@ function App() {
                         </div>
 
                         <div className={"content-wrapper"}>
-
 
                             {responses && (
                                 <div className="response-box">
