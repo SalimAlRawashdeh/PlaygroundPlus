@@ -3,11 +3,16 @@ import './App.css';
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import PromptBar from "./components/PromptBar";
-import Spinner from "./components/Spinner";
+import ResponseBar from "./components/ResponseBar";
 
 function App() {
     const [userInput, setUserInput] = useState('');
     const [responses, setResponses] = useState(null);
+    const [model, setModel] = useState(null)
+    const [response, setResponse] = useState(null);
+    const [reloadFlag, setReloadFlag] = useState(false);
+    const [showResponseBar, setResponseBar] = useState(false)
+
 
     return (
         <>
@@ -15,25 +20,35 @@ function App() {
             <>
 
                 <div className="main-content">
-                    <Sidebar setResponses={setResponses}/>
+                    <Sidebar setResponses={setResponses}
+                             reloadFlag={reloadFlag}
+                             triggerResponseBar={() => setResponseBar(true)}/>
+                    <ResponseBar showResponseBar = {showResponseBar}
+                                 responses = {responses}
+                                 setResponse={setResponse}
+                                 setModel={setModel}/>
 
                     <div className={"app-container"}>
 
                         <div className="sticky-bar-wrapper">
-                            <PromptBar userInput={userInput} setUserInput={setUserInput} setResponses={setResponses}/>
+                            <PromptBar userInput={userInput}
+                                       setUserInput={setUserInput}
+                                       setResponses={setResponses}
+                                       triggerSidebarReload={() => setReloadFlag(prev => !prev)}
+                                       triggerResponseBar={() => setResponseBar(true)}
+/>
                         </div>
 
-                        <div className={"content-wrapper"}>
 
+                        <div className={"content-wrapper"}>
                             {responses && (
+
+
                                 <div className="response-box">
-                                    <h2>Responses:</h2>
-                                    {Object.entries(responses).map(([model, responseText]) => (
+                                    <h2>{model}</h2>
                                         <div key={model} className="response-entry">
-                                            <h3>{model}</h3>
-                                            <p style={{whiteSpace: 'pre-wrap'}}>{responseText}</p>
+                                            <p style={{whiteSpace: 'pre-wrap'}}>{response}</p>
                                         </div>
-                                    ))}
                                 </div>
 
                             )}

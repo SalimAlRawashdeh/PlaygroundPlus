@@ -25,5 +25,4 @@ def ask(request):
 def get_prompts(request):
     prompts = storePrompts.objects.all().values('id', 'prompt', 'model_ids', 'response', 'timestamp')
     data = list(prompts)
-    print (data)
     return JsonResponse({'responses': data})

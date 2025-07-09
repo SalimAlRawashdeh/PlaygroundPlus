@@ -3,8 +3,8 @@ import "./Sidebar.css"
 import {usePreviousPrompts} from "./PreviousPrompts";
 
 
-function Sidebar({ setResponses }) {
-    const prompts = usePreviousPrompts();
+function Sidebar({ setResponses, reloadFlag, triggerResponseBar }) {
+    const prompts = usePreviousPrompts(reloadFlag);
 
     return (
         <div className="sidebar">
@@ -12,7 +12,10 @@ function Sidebar({ setResponses }) {
                 {prompts.map((item) => (
                     <li key={item.id}>
                         <button
-                            onClick={() => setResponses(item.response)}
+                            onClick={() => {
+                                setResponses(item.response);
+                                triggerResponseBar();
+                            }}
                         >
                             {item.prompt.length > 25
                                 ? item.prompt.slice(0, 25) + '...'

@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import LLMSelect from "./LLMSelect";
 import Spinner from "./Spinner";
 
-export default function PromptBar({userInput, setUserInput, setResponses}) {
+export default function PromptBar({userInput, setUserInput, setResponses, triggerSidebarReload, triggerResponseBar}) {
 
     const [showImg, setShowImg] = useState(false);
 
@@ -29,7 +29,8 @@ export default function PromptBar({userInput, setUserInput, setResponses}) {
         const data = await res.json()
         setResponses(data.responses)
         setShowImg(false)
-
+        triggerSidebarReload();
+        triggerResponseBar();
     }
 
     return (

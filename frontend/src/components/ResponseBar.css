@@ -1,18 +1,17 @@
-.sidebar {
+.responsebar {
     height: 100vh;
-    width: 250px;
-    background-color: #4d4d4f ;
+    width: 150px;
+    background-color: #656567;
     overflow-y: auto;
-
 }
 
-.sidebar ul {
+.responsebar ul {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
 }
 
-.sidebar button {
+.responsebar button {
     width: 100%;
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -20,14 +19,14 @@
     margin: 0;
     border: none;
     border-radius: 0;
-    background-color: #4d4d4f;
+    background-color: #656567;
     text-align: left;
     border-bottom: 1px solid #ddd;
     height: 50px;
 }
 
 /* Optional: Add hover effect */
-.sidebar button:hover {
+.responsebar button:hover {
     background-color: #f0f0f0;
     color: black;
 }

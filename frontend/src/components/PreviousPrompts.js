@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 
-export function usePreviousPrompts () {
+export function usePreviousPrompts (trigger) {
     const [askedPrompts, setAskedPrompts] = useState([])
 
     useEffect(() => {
@@ -11,7 +11,7 @@ export function usePreviousPrompts () {
         }
 
         loadPrompts();
-    }, []);
+    }, [trigger]);
 
 
     return askedPrompts
