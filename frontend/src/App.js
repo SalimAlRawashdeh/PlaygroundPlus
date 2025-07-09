@@ -22,7 +22,10 @@ function App() {
                 <div className="main-content">
                     <Sidebar setResponses={setResponses}
                              reloadFlag={reloadFlag}
-                             triggerResponseBar={() => setResponseBar(true)}/>
+                             triggerResponseBar={() => setResponseBar(true)}
+                             setResponse={setResponse}
+                             setModel={setModel}/>
+
                     <ResponseBar showResponseBar = {showResponseBar}
                                  responses = {responses}
                                  setResponse={setResponse}
