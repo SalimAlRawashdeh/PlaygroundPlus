@@ -27,6 +27,7 @@
 
 /* Optional: Add hover effect */
 .responsebar button:hover {
-    background-color: #f0f0f0;
+    background-color: #b9bab9;
     color: black;
 }
+

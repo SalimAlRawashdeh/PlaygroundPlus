@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .bedrock.getResponse import ask_query
@@ -11,16 +11,10 @@ def ask(request):
         user_input = data.get('user_input', '')
         model_ids = data.get('chosenModels', '')
 
-        responses = ask_query(user_input, model_ids)
-
-        storePrompts.objects.create (
-            prompt = user_input,
-            model_ids = model_ids,
-            response = responses
+        return StreamingHttpResponse (
+            streaming_content = ask_query(user_input, model_ids),
+            content_type="text/event-stream"
         )
-
-        return JsonResponse({'responses': responses})
-    return JsonResponse({'error': 'Invalid request method'}, status = 400)
 
 def get_prompts(request):
     prompts = storePrompts.objects.all().values('id', 'prompt', 'model_ids', 'response', 'timestamp')

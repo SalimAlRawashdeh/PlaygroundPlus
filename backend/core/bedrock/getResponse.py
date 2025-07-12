@@ -1,8 +1,10 @@
 import json
 import boto3
+
+from .extractText import extractText
 from .modelList import get_model_payloads
 from .modelHashMap import modelIDs
-
+from ..models import storePrompts
 
 bedrock = boto3.client("bedrock-runtime", region_name="us-west-2")
 
@@ -25,25 +27,14 @@ def ask_query(prompt, model_ids):
         )
 
         response_body = json.loads(response["body"].read())
-        response_text = None
-
-        if model_id == "amazon.titan-text-lite-v1":
-            # Titan Lite returns 'results' list with 'outputText'
-            response_text = response_body.get("results", [{}])[0].get("outputText")
-
-        elif model_id.startswith("arn:aws:bedrock") and "deepseek" in model_id:
-            # DeepSeek returns 'choices' list with 'text'
-            if "choices" in response_body and len(response_body["choices"]) > 0:
-                response_text = response_body["choices"][0].get("text")
-
-        else:
-            # Other models might return 'completions' list with nested 'data.text'
-            if "completions" in response_body and len(response_body["completions"]) > 0:
-                response_text = response_body["completions"][0].get("data", {}).get("text")
-            else:
-                # Or might just have 'generation' or 'completion' keys directly
-                response_text = response_body.get("generation") or response_body.get("completion")
+        response_text = extractText(response_body, model_id)
 
         results[model] = response_text
 
-    return results
+        yield f"data: {json.dumps({model: response_text})}\n\n"
+
+    storePrompts.objects.create(
+        prompt=prompt,
+        model_ids=model_ids,
+        response=results
+    )
