@@ -12,6 +12,7 @@ function App() {
     const [response, setResponse] = useState(null);
     const [reloadFlag, setReloadFlag] = useState(false);
     const [showResponseBar, setResponseBar] = useState(false)
+    const [m, setM] = useState(null)
 
 
     return (
@@ -24,12 +25,15 @@ function App() {
                              reloadFlag={reloadFlag}
                              triggerResponseBar={() => setResponseBar(true)}
                              setResponse={setResponse}
-                             setModel={setModel}/>
+                             setModel={setModel}
+                             setM = {setM}/>
 
                     <ResponseBar showResponseBar = {showResponseBar}
                                  responses = {responses}
                                  setResponse={setResponse}
-                                 setModel={setModel}/>
+                                 setModel={setModel}
+                                 setM = {setM}
+                                 m = {m}/>
 
                     <div className={"app-container"}>
 

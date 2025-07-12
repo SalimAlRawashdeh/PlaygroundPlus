@@ -31,3 +31,8 @@
     color: black;
 }
 
+.responsebar button.clicked {
+    background: #b9bab9;
+    color: black
+}
+

@@ -31,3 +31,8 @@
     background-color: #f0f0f0;
     color: black;
 }
+
+.sidebar button.clicked {
+    background-color: #f0f0f0;
+    color: black;
+}
