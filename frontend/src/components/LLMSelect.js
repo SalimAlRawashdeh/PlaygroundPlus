@@ -16,19 +16,19 @@ export default function LLMSelect() {
             {isDropDownDisplayed && (
                 <div className="panel">
                     <label>
-                        <input type="checkbox" name="models" value="Llama 3"/> Llama 3
-                    </label>
-                    <br/>
-                    <label>
-                        <input type="checkbox" name="models" value="Titan Lite"/> Titan Lite
-                    </label>
-                    <br/>
-                    <label>
                         <input type="checkbox" name="models" value="Claude"/> Claude V2
                     </label>
                     <br/>
                     <label>
+                        <input type="checkbox" name="models" value="Llama 3"/> Llama 3
+                    </label>
+                    <br/>
+                    <label>
                         <input type="checkbox" name="models" value="DeepSeek"/> DeepSeek-R1
+                    </label>
+                    <br/>
+                    <label>
+                        <input type="checkbox" name="models" value="Titan Lite"/> Titan Lite
                     </label>
                 </div>
             )}

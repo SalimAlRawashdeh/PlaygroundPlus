@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import LLMSelect from "./LLMSelect";
 import Spinner from "./Spinner";
 
-export default function PromptBar({userInput, setUserInput, setResponses, triggerSidebarReload, triggerResponseBar}) {
+export default function PromptBar({userInput, setUserInput, setResponses, triggerSidebarReload, triggerResponseBar, setSortLatest}) {
 
     const [showImg, setShowImg] = useState(false);
 
@@ -33,6 +33,7 @@ export default function PromptBar({userInput, setUserInput, setResponses, trigge
 
         while (true) {
             const {value, done} = await reader.read()
+            console.log("Chunk received:", decoder.decode(value));
             if (done) break
 
             buffer += decoder.decode(value, {stream : true})
@@ -41,7 +42,7 @@ export default function PromptBar({userInput, setUserInput, setResponses, trigge
             for (let i = 0; i < parts.length - 1; i ++) {
                 let part = parts[i].trim()
                 if (part.startsWith('data: ')) {
-                    const jsonStr = part.substring('data '.length)
+                    const jsonStr = part.substring('data: '.length)
                     const parsed = JSON.parse(jsonStr)
                     setResponses(prev => ({...prev, ...parsed}))
                 }
@@ -51,6 +52,7 @@ export default function PromptBar({userInput, setUserInput, setResponses, trigge
         }
 
         setShowImg(false)
+        setSortLatest(true)
         triggerSidebarReload();
         triggerResponseBar();
     }

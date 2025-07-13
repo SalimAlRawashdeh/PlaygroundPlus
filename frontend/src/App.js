@@ -13,6 +13,7 @@ function App() {
     const [reloadFlag, setReloadFlag] = useState(false);
     const [showResponseBar, setResponseBar] = useState(false)
     const [m, setM] = useState(null)
+    const [sortLatest, setSortLatest] = useState(null)
 
 
     return (
@@ -26,14 +27,16 @@ function App() {
                              triggerResponseBar={() => setResponseBar(true)}
                              setResponse={setResponse}
                              setModel={setModel}
-                             setM = {setM}/>
+                             setM={setM}
+                             setSortLatest={setSortLatest}
+                             sortLatest={sortLatest}/>
 
-                    <ResponseBar showResponseBar = {showResponseBar}
-                                 responses = {responses}
+                    <ResponseBar showResponseBar={showResponseBar}
+                                 responses={responses}
                                  setResponse={setResponse}
                                  setModel={setModel}
-                                 setM = {setM}
-                                 m = {m}/>
+                                 setM={setM}
+                                 m={m}/>
 
                     <div className={"app-container"}>
 
@@ -41,11 +44,11 @@ function App() {
                             <PromptBar userInput={userInput}
                                        setUserInput={setUserInput}
                                        setResponses={setResponses}
+                                       setSortLatest={setSortLatest}
                                        triggerSidebarReload={() => setReloadFlag(prev => !prev)}
                                        triggerResponseBar={() => setResponseBar(true)}
-/>
+                            />
                         </div>
-
 
                         <div className={"content-wrapper"}>
                             {responses && (
@@ -53,9 +56,9 @@ function App() {
 
                                 <div className="response-box">
                                     <h2>{model}</h2>
-                                        <div key={model} className="response-entry">
-                                            <p style={{whiteSpace: 'pre-wrap'}}>{response}</p>
-                                        </div>
+                                    <div key={model} className="response-entry">
+                                        <p style={{whiteSpace: 'pre-wrap'}}>{response}</p>
+                                    </div>
                                 </div>
 
                             )}
@@ -63,6 +66,8 @@ function App() {
                             <br/>
 
                         </div>
+
+
                     </div>
                 </div>
             </>
