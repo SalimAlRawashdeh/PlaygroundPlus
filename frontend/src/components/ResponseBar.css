@@ -36,3 +36,22 @@
     color: black
 }
 
+.responsebar button.loading {
+    background: linear-gradient(270deg, #8a8a8a, #b9bab9, #8a8a8a);
+    background-size: 600% 600%;
+    animation: loadingGradientShift 3s ease infinite;
+    color: black;  /* Make sure text stays readable */
+}
+
+@keyframes loadingGradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+

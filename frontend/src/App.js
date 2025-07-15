@@ -14,6 +14,8 @@ function App() {
     const [showResponseBar, setResponseBar] = useState(false)
     const [m, setM] = useState(null)
     const [sortLatest, setSortLatest] = useState(null)
+    const [selectedModels, setSelectedModels] = useState([])
+    const [completedModels, setCompletedModels] = useState([])
 
 
     return (
@@ -36,7 +38,9 @@ function App() {
                                  setResponse={setResponse}
                                  setModel={setModel}
                                  setM={setM}
-                                 m={m}/>
+                                 m={m}
+                                 selectedModels={selectedModels}
+                                 completedModels={completedModels}/>
 
                     <div className={"app-container"}>
 
@@ -45,13 +49,15 @@ function App() {
                                        setUserInput={setUserInput}
                                        setResponses={setResponses}
                                        setSortLatest={setSortLatest}
+                                       setSelectedModels = {setSelectedModels}
+                                       setCompletedModels = {setCompletedModels}
                                        triggerSidebarReload={() => setReloadFlag(prev => !prev)}
                                        triggerResponseBar={() => setResponseBar(true)}
                             />
                         </div>
 
                         <div className={"content-wrapper"}>
-                            {responses && (
+                            {responses && Object.keys(responses).length > 0 && (
 
 
                                 <div className="response-box">
