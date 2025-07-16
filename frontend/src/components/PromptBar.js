@@ -13,6 +13,7 @@ export default function PromptBar({userInput,
                                   setCompletedModels}) {
 
     const [showImg, setShowImg] = useState(false);
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,7 +27,7 @@ export default function PromptBar({userInput,
             setShowImg(true)
             setResponses({})
 
-            const res = await fetch("http://127.0.0.1:8000/api/ask/", {
+            const res = await fetch(`${API_BASE_URL}/api/ask/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

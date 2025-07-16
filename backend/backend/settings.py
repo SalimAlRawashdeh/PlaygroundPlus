@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+ENV = os.environ.get('ENV', 'development')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -77,16 +77,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'PlaygroundPlus',
-        'USER': 'PlaygroundPlusUser',
-        'PASSWORD': 'Ssalim2Llina!',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if os.environ.get('ENV') == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME'),
+            'USER': os.environ.get('DB_USER'),
+            'PASSWORD': os.environ.get('DB_PASSWORD'),
+            'HOST': os.environ.get('DB_HOST'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
     }
-}
+else:
+    # Local development DB settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'your_local_db_name',
+            'USER': 'your_local_db_user',
+            'PASSWORD': 'your_local_db_password',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -134,6 +147,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR.parent, 'frontend', 'build', 'static'),
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+if ENV == 'production':
+    CORS_ALLOWED_ORIGINS = [
+        "https://master.dk1w5bh30z7ik.amplifyapp.com",  # Your deployed React app domain
+    ]
+else:
+    # Development settings (e.g., React dev server on localhost:3000)
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:3000",
+    ]

@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react'
 
 export function usePreviousPrompts (trigger) {
     const [askedPrompts, setAskedPrompts] = useState([])
+    const API_BASE_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const loadPrompts = async () => {
-            const response = await fetch ("http://127.0.0.1:8000/api/get_prompts")
+            const response = await fetch (`${API_BASE_URL}/api/get_prompts/`)
             const data = await response.json()
 
             const sorted = [... data.responses].sort(
