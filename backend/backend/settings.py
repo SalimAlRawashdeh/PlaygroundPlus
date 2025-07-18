@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ENV = os.environ.get('ENV', 'development')
+# ENV = os.environ.get('ENV', 'development')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ozw(%4!2j*w*2xji!bthc&b!4owx=2e*9(85cc4d_$ilfy6ttl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,29 +77,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.environ.get('ENV') == 'production':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
-        }
+# if os.environ.get('ENV') == 'production':
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Ssalim2Llina!',
+        'HOST': 'bedrocked-database.cpugs42mykdc.us-west-2.rds.amazonaws.com',
+        'PORT': '5432',
     }
-else:
-    # Local development DB settings
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'your_local_db_name',
-            'USER': 'your_local_db_user',
-            'PASSWORD': 'your_local_db_password',
-            'HOST': 'localhost',
-            'PORT': '5432',
-        }
-    }
+}
+# else:
+#     # Local development DB settings
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'PlaygroundPlus',
+#         'USER': 'PlaygroundPlusUser',
+#         'PASSWORD': 'Ssalim2Llina!',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 
 
 # Password validation
@@ -143,11 +143,15 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR.parent, 'frontend', 'build', 'static'),
-]
+# if os.environ.get('DENV') == 'production':
+    # On EB, React is separate, so no React static files locally
+STATICFILES_DIRS = []
+# else:
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR.parent, 'frontend', 'build', 'static'),
+#     ]
 
-if ENV == 'production':
+if os.environ.get('ENV') == 'production':
     CORS_ALLOWED_ORIGINS = [
         "https://master.dk1w5bh30z7ik.amplifyapp.com",  # Your deployed React app domain
     ]
