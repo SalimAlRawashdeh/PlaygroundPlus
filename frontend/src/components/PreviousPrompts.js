@@ -5,7 +5,8 @@ export function usePreviousPrompts (trigger) {
     const API_BASE_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        const loadPrompts = async () => {
+        const loadPrompts = async () => {x``
+            console.log(API_BASE_URL)
             const response = await fetch (`${API_BASE_URL}/api/get_prompts/`)
             const data = await response.json()
 

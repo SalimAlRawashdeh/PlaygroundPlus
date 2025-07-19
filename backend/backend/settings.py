@@ -14,6 +14,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 # ENV = os.environ.get('ENV', 'development')
 
 # Quick-start development settings - unsuitable for production
@@ -77,29 +79,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# if os.environ.get('ENV') == 'production':
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'Ssalim2Llina!',
-        'HOST': 'bedrocked-database.cpugs42mykdc.us-west-2.rds.amazonaws.com',
-        'PORT': '5432',
+if os.environ.get('ENV') == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'Ssalim2Llina!',
+            'HOST': 'bedrocked-database.cpugs42mykdc.us-west-2.rds.amazonaws.com',
+            'PORT': '5432',
+        }
     }
-}
-# else:
-#     # Local development DB settings
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'PlaygroundPlus',
-#         'USER': 'PlaygroundPlusUser',
-#         'PASSWORD': 'Ssalim2Llina!',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+else:
+    # Local development DB settings
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'PlaygroundPlus',
+            'USER': 'PlaygroundPlusUser',
+            'PASSWORD': 'Ssalim2Llina!',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -136,7 +138,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -145,7 +147,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # if os.environ.get('DENV') == 'production':
     # On EB, React is separate, so no React static files locally
-STATICFILES_DIRS = []
+
+
+# In production, collectstatic will put all static files here:
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# In development, serve React static files from frontend build folder
+if os.environ.get('ENV') == 'production':
+    STATICFILES_DIRS = []
+else:
+    STATICFILES_DIRS = [
+        BASE_DIR.parent / 'frontend' / 'build' / 'static',
+    ]
 # else:
 #     STATICFILES_DIRS = [
 #         os.path.join(BASE_DIR.parent, 'frontend', 'build', 'static'),

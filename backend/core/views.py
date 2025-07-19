@@ -1,4 +1,4 @@
-from django.http import JsonResponse, StreamingHttpResponse
+from django.http import JsonResponse, StreamingHttpResponse, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .bedrock.getResponse import ask_query
@@ -15,6 +15,9 @@ def ask(request):
             streaming_content = ask_query(user_input, model_ids),
             content_type="text/event-stream"
         )
+
+    return HttpResponseNotAllowed(['POST'])
+
 
 def get_prompts(request):
     prompts = storePrompts.objects.all().values('id', 'prompt', 'model_ids', 'response', 'timestamp')
